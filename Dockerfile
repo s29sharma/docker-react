@@ -14,6 +14,7 @@ FROM nginx
 # /usr/share/nginx/html is the default directory that nginx looks into
 # we don't need to make any changes to the config if we can 
 # put the stuff there and the content is just static
+EXPOSE 80
 COPY --from=builder /app/build /usr/share/nginx/html
 
 
