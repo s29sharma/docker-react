@@ -1,0 +1,33 @@
+version: '3'
+services:
+  react-app-docker:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm","run","test"]    
+
+
+#In this case we specify the volumes and just as in case of simple docker
+#run command
+# pwd: present working directory. In docker compose "." before :/app
+# is equivalemt to specifying pwd in simple docker run command
+# example : docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app 8c6239284624
+# "8c6239284624" is the id of container
+# in first volume specification i.e -v we don’t specify “pwd" 
+# because we simply ask it to use node_modules folder inside 
+# container and not map anything
+# but in case 2 we ask it to map everything else in app directory 
+# to our present working directory so that any changes we make 
+# are reflected in docker container
