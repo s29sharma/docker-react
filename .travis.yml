@@ -8,3 +8,19 @@ before_install:
 
 script: 
   - docker run s29sharma/docker-react npm run test -- --coverage
+# travis ci comes pre confgigured to handle deployment to select few providers
+# elastic bean stalk is one of them
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "docker-react"
+  env: "DockerReact-env"
+  bucket_name: "elasticbeanstalk-us-east-1-481756315055"
+  bucket_path: "docker-react"
+  on:
+    branch:master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
+  
+# will only deploy when change is made to master branch
